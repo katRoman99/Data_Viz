@@ -9,6 +9,8 @@ class RandomWalk():
 
         self.x_values = [0]
         self.y_values = [0]
+        self.direction = [-1, 1]
+        self.distance = [0, 1, 2, 3, 4, 5]
 
     def fill_walk(self):
         """ Generate all points needed for a random walk """
@@ -16,13 +18,8 @@ class RandomWalk():
         # Doing the walk until the specified number of steps is reached
         while len(self.x_values) < self.num_points:
 
-            x_direction = choice([1, -1])
-            x_distance = choice([0, 1, 2, 3, 4])
-            x_step = x_direction * x_distance
-
-            y_direction = choice([1, -1])
-            y_distance = choice([0, 1, 2, 3, 4])
-            y_step = y_direction * y_distance
+            x_step = self.get_step()
+            y_step = self.get_step()
 
             # Discard steps that lead to nowhere
             if x_step == 0 and y_step == 0:
@@ -34,6 +31,15 @@ class RandomWalk():
 
             self.x_values.append(next_x)
             self.y_values.append(next_y)
+
+    def get_step(self):
+        """ Obtain the next step for the random walk """
+        direction = choice(self.direction)
+        distance = choice(self.distance)
+
+        step = direction * distance
+        return step
+
 
     def reset_walk(self):
             """ Prepare the lists for a new walk """
